@@ -5,23 +5,37 @@
 <h1>Hello, {{ person }}</h1>
 
 <div class = "row">
-    <h2>Enter Indoor Climbs</h2>
-    <form action = "/homepage" method = "post">
-        <input type = "date" placeholder = "date" name = "date">
-        <input type = "text" placeholder = "grade" name = "grade">
-        <select name = "type">
-            <option value = "lead">Lead</option>
-            <option value = "toprope">Toprope</option>
-            <option value = "boulder">Boulder</option>
-        </select>
-        <select name = "send_type">
-            <option value = "onsight">Onsight</option>
-            <option value = "flash">Flash</option>
-            <option value = "redpoint">Redpoint / Send</option>
-        </select>
-        <input type = "number" name = "num_routes">Number</input>
-        <button class = "btn btn-primary" type = "submit">Submit</button>
-    </form>
+    <div id = "indoor-main-stats" class = "col-md-4">
+
+    </div>
+    <div id = "form-container" class = "col-md-8">
+        <h2>Enter Indoor Climbs</h2>
+        <form action = "/homepage" method = "post">
+            <input type = "date" placeholder = "date" name = "date">
+            <input type = "text" placeholder = "grade" name = "grade">
+            <select name = "type">
+                <option value = "lead">Lead</option>
+                <option value = "toprope">Toprope</option>
+                <option value = "boulder">Boulder</option>
+            </select>
+            <select name = "send_type">
+                <option value = "onsight">Onsight</option>
+                <option value = "flash">Flash</option>
+                <option value = "redpoint">Redpoint / Send</option>
+            </select>
+            <input type = "number" name = "num_routes">Number</input>
+            <button class = "btn btn-primary" type = "submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div class = "row">
+    <div class = "col-md-6">
+        <canvas id = "chart1"></canvas>
+    </div>
+    <div class = "col-md-6">
+        <canvas id = "chart2"></canvas>
+    </div>
 </div>
 
 
@@ -48,5 +62,9 @@
         {% endfor %}
     </table>
 </div>
+
+
+
+<script type = "text/javascript" src = "{{url_for('static', filename = 'indoor_charts.js')}}"></script>
 
 {% endblock %}
