@@ -102,23 +102,20 @@ def homepage():
         rows = conn.execute('SELECT * FROM indoor WHERE user_id = ?', (user,) ).fetchall()
         users = conn.execute("SELECT username FROM users WHERE user_id = ?", (user, )).fetchall()
         person = users[0]['username']
+
+        #get chart data for total climbs chart
+        chart_rows = conn.execute("SELECT date, SUM(num_routes) FROM indoor GROUP BY date").fetchall()
         conn.close()
 
-        #transform data from DB to json
+        #Transform data to json
         object_list = []
-        for row in rows:
+        for row in chart_rows:
             d = {}
-            d['date'] = row[1]
-            d['grade'] = row[2]
-            d['type'] = row[3]
-            d['num_routes'] = row[4]
-            d['send_type'] = row[5]
+            d['date'] = row[0]
+            d['routes'] = row[1]
             object_list.append(d)
 
-        chart_data = json.dumps(object_list)
-        print(chart_data)
-
-        return render_template('index.html', person = person, rows = rows, chart_data = chart_data)
+        return render_template('index.html', person = person, rows = rows, chart_data = object_list)
 
 
 #outdoor climbs page

@@ -68,7 +68,7 @@
 </div>
 
 <script type = "text/javascript">
-    const chartData = '{{ chart_data|tojson }}';
+    const chartData = {{ chart_data|tojson }};
 </script>
 
 <script type = "text/javascript" src = "{{url_for('static', filename = 'indoor_charts.js')}}"></script>

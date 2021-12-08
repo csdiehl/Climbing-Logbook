@@ -1,22 +1,13 @@
- //receive data
+ //confirm data was received from backend
  console.log(chartData)
  //console.log(JSON.parse(chartData.replace(/&#34;/g,'"'))) - use in case json gets messed up
  
  //setup Chart 1
- const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May'
-]
-
 const data = {
-    labels: labels,
     datasets: [{
         label: "example dataset",
         backgroundColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20],
+        data: chartData
     }]
 };
 
@@ -24,7 +15,12 @@ const data = {
 const config = {
     type: 'line',
     data: data,
-    options: {}
+    options: {
+        parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'routes'
+        }
+    }
 };
 
 //render Chart 1
@@ -38,20 +34,10 @@ const Chart1 = new Chart(
 
 
  //setup Chart 2
- const labels2 = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May'
-]
-
 const data2 = {
-    labels: labels2,
     datasets: [{
-        label: "example dataset",
         backgroundColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20],
+        data: [{"date": "2021-12-02", "routes": 4}, {"date": "2021-12-05", "routes": 5}, {"date": "2021-12-07", "routes": 7}]
     }]
 };
 
@@ -59,7 +45,12 @@ const data2 = {
 const config2 = {
     type: 'line',
     data: data2,
-    options: {}
+    options: {
+        parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'routes'
+        }
+    }
 };
 
 //render Chart 2
