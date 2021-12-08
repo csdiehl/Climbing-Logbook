@@ -74,7 +74,7 @@ def register():
         
 
 
-#main page
+#main page - for indoor climbs
 @app.route("/homepage", methods =['GET', 'POST'])
 def homepage():
 
@@ -106,6 +106,40 @@ def homepage():
 
         return render_template('index.html', person = person, rows = rows)
 
+
+#outdoor climbs page
+@app.route("/outdoor", methods = ['GET', 'POST'])
+def outdoor():
+    user = session['user_id']
+
+    if request.method == "POST":
+        send_type = request.form.get('send_type')
+        grade = request.form.get('grade')
+        type = request.form.get('type')
+        date = request.form.get('date')
+        name = request.form.get('route_name')
+        location = request.form.get('location')
+        height = request.form.get('height')
+        pitches = request.form.get('pitches')
+
+        conn = get_db()
+        #add new climb to DB
+        conn.execute("INSERT INTO outdoor (user_id, date, grade, name, location, height, pitches, type, send_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (user, date, grade, name, location, height, pitches, type, send_type))
+        conn.commit()
+        conn.close()
+
+        return redirect("/outdoor")
+    
+    else:
+        conn = get_db()
+        #get all climbs in DB to pass to html
+        rows = conn.execute('SELECT * FROM outdoor WHERE user_id = ?', (user,) ).fetchall()
+        users = conn.execute("SELECT username FROM users WHERE user_id = ?", (user, )).fetchall()
+        person = users[0]['username']
+        conn.close()
+
+        return render_template('outdoor.html', person = person, rows = rows)
+        
 
 @app.route("/logout")
 def logout():
