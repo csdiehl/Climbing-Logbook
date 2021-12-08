@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1>Outdoor Climbs</h1>
+
+<div class = "row">
+    <h2>Enter Outdoor Climbs</h2>
+    <form action = "/outdoor" method = "post">
+        <input type = "date" placeholder = "date" name = "date">
+        <input type = "text" placeholder = "grade" name = "grade">
+        <input type = "text" placeholder = "location" name = "location">
+        <input type = "text" placeholder = "route name" name = "route_name">
+        <input type = "number" placeholder = "height" name = "height">
+        <input type = "number" name = "pitches">Pitches</input>
+        <select name = "type">
+            <option value = "lead">Lead</option>
+            <option value = "toprope">Toprope</option>
+            <option value = "boulder">Boulder</option>
+        </select>
+        <select name = "send_type">
+            <option value = "onsight">Onsight</option>
+            <option value = "flash">Flash</option>
+            <option value = "redpoint">Redpoint / Send</option>
+        </select>
+        <button class = "btn btn-primary" type = "submit">Submit</button>
+    </form>
+</div>
+
+
+<h2>Your activity</h2>
+<div class = "row">
+    <table id = "results-table">
+        <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Route Name</th>
+            <th>Location</th>
+            <th>Grade</th>
+            <th>Height</th>
+            <th>Pitches</th>
+            <th>Climbing Style</th>
+            <th>Type</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row['user_id'] }}</td>
+            <td>{{ row['date'] }}</td>
+            <td>{{ row['name'] }}</td>
+            <td>{{ row['location'] }}</td>
+            <td>{{ row['grade'] }}</td>
+            <td>{{ row['height'] }}</td>
+            <td>{{ row['pitches'] }}</td>
+            <td>{{ row['type'] }}</td>
+            <td>{{ row['send_type'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
