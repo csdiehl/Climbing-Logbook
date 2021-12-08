@@ -81,14 +81,15 @@ def homepage():
     user = session['user_id']
 
     if request.method == "POST":
-        route_name = request.form.get('route_name')
+        send_type = request.form.get('send_type')
         grade = request.form.get('grade')
-        location = request.form.get('location')
+        type = request.form.get('type')
         date = request.form.get('date')
+        number = request.form.get('num_routes')
 
         conn = get_db()
         #add new climb to DB
-        conn.execute("INSERT INTO log (user_id, date, grade, name, location) VALUES (?, ?, ?, ?, ?)", (user, date, grade, route_name, location))
+        conn.execute("INSERT INTO indoor (user_id, date, grade, type, num_routes, send_type) VALUES (?, ?, ?, ?, ?, ?)", (user, date, grade, type, number, send_type))
         conn.commit()
         conn.close()
 
@@ -98,7 +99,7 @@ def homepage():
     else:
         conn = get_db()
         #get all climbs in DB to pass to html
-        rows = conn.execute('SELECT * FROM log WHERE user_id = ?', (user,) ).fetchall()
+        rows = conn.execute('SELECT * FROM indoor WHERE user_id = ?', (user,) ).fetchall()
         users = conn.execute("SELECT username FROM users WHERE user_id = ?", (user, )).fetchall()
         person = users[0]['username']
         conn.close()
@@ -110,7 +111,7 @@ def homepage():
 def logout():
     #end session and return to login page
     session.clear()
-    redirect("/")
+    return redirect("/")
 
 
         
