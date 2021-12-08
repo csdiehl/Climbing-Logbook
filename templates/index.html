@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+<h1>Hello, {{ person }}</h1>
+
+<div class = "row">
+    <h2>Enter Climbs</h2>
+    <form action = "/homepage", method = "post">
+        <input type = "date" placeholder = "date" name = "date">
+        <input type = "text" placeholder="route name" name = "route_name">
+        <input type = "text" placeholder = "grade" name = "grade">
+        <input type = "text" placeholder="location" name = "location">
+        <button class = "btn btn-primary" type = "submit">Submit</button>
+    </form>
+</div>
+
+</form>
+
+<h2>Your activity</h2>
+<div class = "row">
+    <table id = "results-table">
+        <tr>
+            <th>User</th>
+            <th>Route</th>
+            <th>Grade</th>
+            <th>Location</th>
+            <th>Date</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row['user_id'] }}</td>
+            <td>{{ row['name'] }}</td>
+            <td>{{ row['grade'] }}</td>
+            <td>{{ row['location'] }}</td>
+            <td>{{ row['date'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
