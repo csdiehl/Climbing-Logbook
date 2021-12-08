@@ -1,3 +1,7 @@
+ //receive data
+ console.log(chartData)
+ //console.log(JSON.parse(chartData.replace(/&#34;/g,'"'))) - use in case json gets messed up
+ 
  //setup Chart 1
  const labels = [
     'January',

@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, redirect, request, session
+from flask import Flask, flash, render_template, redirect, request, session, json
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 import sqlite3 as sql
 from flask_session import Session
@@ -104,7 +104,21 @@ def homepage():
         person = users[0]['username']
         conn.close()
 
-        return render_template('index.html', person = person, rows = rows)
+        #transform data from DB to json
+        object_list = []
+        for row in rows:
+            d = {}
+            d['date'] = row[1]
+            d['grade'] = row[2]
+            d['type'] = row[3]
+            d['num_routes'] = row[4]
+            d['send_type'] = row[5]
+            object_list.append(d)
+
+        chart_data = json.dumps(object_list)
+        print(chart_data)
+
+        return render_template('index.html', person = person, rows = rows, chart_data = chart_data)
 
 
 #outdoor climbs page
