@@ -107,7 +107,6 @@ def homepage():
 
         #get chart data for max climbs chart
         max_chart_rows = conn.execute("SELECT date, grade, type FROM indoor WHERE user_id = ?",(user,) ).fetchall()
-        conn.close()
 
         #Transform data to json
         object_list = []
@@ -136,6 +135,7 @@ def homepage():
                 d['difficulty'] = grades.index(row[1])
             max_list.append(d)
 
+        
 
         return render_template('index.html', person = person, chart_data = object_list, max_data = max_list)
 
