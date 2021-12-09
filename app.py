@@ -120,7 +120,7 @@ def homepage():
         grades = ["5.7", "5.8", "5.9", "5.10a", "5.10b", "5.10c", "5.10d", "5.11a", "5.11b", "5.11c", "5.11d", 
         "5.12a", "5.12b", "5.12c", "5.12d", "5.13a", "5.13b"]
 
-        boulders = ["NA", "VB", "V0", "NA", "NA", "V1", "NA", "V2", "NA", "V3", "NA", "V4", "V5", "V6", "NA", "V7", "V8"]
+        boulders = ["NA", "VB", "V0", "NA", "NA", "V1", "NA", "V2", "V3", "NA", "NA", "V4", "V5", "V6", "NA", "V7", "V8"]
 
         #transform data for max difficulty chart
         max_list = []
