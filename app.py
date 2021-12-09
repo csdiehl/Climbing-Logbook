@@ -98,13 +98,15 @@ def homepage():
     #Reached via GET
     else:
         conn = get_db()
-        #get all climbs in DB to pass to html
-        rows = conn.execute('SELECT * FROM indoor WHERE user_id = ?', (user,) ).fetchall()
+        #get username
         users = conn.execute("SELECT username FROM users WHERE user_id = ?", (user, )).fetchall()
         person = users[0]['username']
 
         #get chart data for total climbs chart
-        chart_rows = conn.execute("SELECT date, SUM(num_routes) FROM indoor GROUP BY date").fetchall()
+        chart_rows = conn.execute("SELECT date, SUM(num_routes) FROM indoor WHERE user_id = ? GROUP BY date", (user,) ).fetchall()
+
+        #get chart data for max climbs chart
+        max_chart_rows = conn.execute("SELECT date, grade, type FROM indoor WHERE user_id = ?",(user,) ).fetchall()
         conn.close()
 
         #Transform data to json
@@ -115,7 +117,27 @@ def homepage():
             d['routes'] = row[1]
             object_list.append(d)
 
-        return render_template('index.html', person = person, rows = rows, chart_data = object_list)
+        #Climbing difficulty scale conversion: https://www.rei.com/learn/expert-advice/climbing-bouldering-rating.html
+        grades = ["5.7", "5.8", "5.9", "5.10a", "5.10b", "5.10c", "5.10d", "5.11a", "5.11b", "5.11c", "5.11d", 
+        "5.12a", "5.12b", "5.12c", "5.12d", "5.13a", "5.13b"]
+
+        boulders = ["NA", "VB", "V0", "NA", "NA", "V1", "NA", "V2", "NA", "V3", "NA", "V4", "V5", "V6", "NA", "V7", "V8"]
+
+        #transform data for max difficulty chart
+        max_list = []
+        for row in max_chart_rows:
+            d = {}
+            d['date'] = row[0]
+            d['grade'] = row[1]
+            d['type'] = row[2]
+            if row[2] == "boulder":
+                d['difficulty'] = boulders.index(row[1])
+            else:
+                d['difficulty'] = grades.index(row[1])
+            max_list.append(d)
+
+
+        return render_template('index.html', person = person, chart_data = object_list, max_data = max_list)
 
 
 #outdoor climbs page
@@ -150,7 +172,20 @@ def outdoor():
         conn.close()
 
         return render_template('outdoor.html', person = person, rows = rows)
-        
+
+#history page with full table
+@app.route("/history")
+def history():
+
+    user = session['user_id']
+
+    #get all indoor climbs in DB to pass to html
+    conn = get_db()
+    rows = conn.execute('SELECT * FROM indoor WHERE user_id = ?', (user,) ).fetchall()
+    conn.close()
+
+    return render_template("history.html", rows = rows)
+
 
 @app.route("/logout")
 def logout():

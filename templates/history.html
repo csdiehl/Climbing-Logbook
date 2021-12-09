@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<h1>Your Activity</h1>
+<h2>Indoor</h2>
+<div class = "row">
+    <table id = "results-table">
+        <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Grade</th>
+            <th>Climbing Style</th>
+            <th>Type</th>
+            <th>Number of Routes</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row['user_id'] }}</td>
+            <td>{{ row['date'] }}</td>
+            <td>{{ row['grade'] }}</td>
+            <td>{{ row['type'] }}</td>
+            <td>{{ row['send_type'] }}</td>
+            <td>{{ row['num_routes'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

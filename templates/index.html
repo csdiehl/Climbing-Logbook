@@ -38,37 +38,9 @@
     </div>
 </div>
 
-
-<h2>Your activity</h2>
-<div class = "row">
-    <table id = "results-table">
-        <tr>
-            <th>User</th>
-            <th>Date</th>
-            <th>Grade</th>
-            <th>Climbing Style</th>
-            <th>Type</th>
-            <th>Number of Routes</th>
-        </tr>
-        {% for row in rows %}
-        <tr>
-            <td>{{ row['user_id'] }}</td>
-            <td>{{ row['date'] }}</td>
-            <td>{{ row['grade'] }}</td>
-            <td>{{ row['type'] }}</td>
-            <td>{{ row['send_type'] }}</td>
-            <td>{{ row['num_routes'] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-
-<div>
-    {{ chart_data }}
-</div>
-
 <script type = "text/javascript">
     const chartData = {{ chart_data|tojson }};
+    const maxData = {{ max_data|tojson }}
 </script>
 
 <script type = "text/javascript" src = "{{url_for('static', filename = 'indoor_charts.js')}}"></script>
