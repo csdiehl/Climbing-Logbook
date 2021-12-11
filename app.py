@@ -3,6 +3,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 import sqlite3 as sql
 from flask_session import Session
 from tempfile import mkdtemp
+from functools import wraps
 
 #configure application
 app = Flask(__name__)
@@ -18,6 +19,15 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+#function to ensure login
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 #Climbing difficulty scale conversion: https://www.rei.com/learn/expert-advice/climbing-bouldering-rating.html
 grades = ["5.7", "5.8", "5.9", "5.10a", "5.10b", "5.10c", "5.10d", "5.11a", "5.11b", "5.11c", "5.11d", 
@@ -45,7 +55,8 @@ def login():
 
         #check that username is valid
         if len(rows) != 1: 
-            return redirect("/") #add error message
+            error = 'Not a User. Please create username using the new user box'
+            return render_template("login.html", error = error)
         
         #remember which user logged in
         session['user_id'] = rows[0]['user_id']
@@ -61,6 +72,9 @@ def register():
     
     else:
         name = request.form.get('username')
+        if not name:
+            error = "Please enter a name."
+            return render_template("login.html", error = error)
 
         conn = get_db()
         rows = conn.execute("SELECT username FROM users").fetchall()
@@ -69,7 +83,8 @@ def register():
         #see if the name is already taken
         for row in rows:
             if name == row['username']:
-                return redirect("/") #add error message - username already taken
+                error = "Username already taken. Please enter another name."
+                return render_template("login.html", error = error) #add error message - username already taken
 
         #if the name is free, add it to the database and redirect user to login
         conn = get_db()
@@ -83,6 +98,7 @@ def register():
 
 #main page - for indoor climbs
 @app.route("/homepage", methods =['GET', 'POST'])
+@login_required
 def homepage():
 
     user = session['user_id']
@@ -93,6 +109,14 @@ def homepage():
         type = request.form.get('type')
         date = request.form.get('date')
         number = request.form.get('num_routes')
+
+        if not number or not date:
+            flash("missing date or number of routes")
+            return redirect("/homepage")
+
+        if int(number) <= 0:
+            flash("Enter a positive integer for routes")
+            return redirect("/homepage")
 
         conn = get_db()
         #add new climb to DB
@@ -144,6 +168,7 @@ def homepage():
 
 #outdoor climbs page
 @app.route("/outdoor", methods = ['GET', 'POST'])
+@login_required
 def outdoor():
     user = session['user_id']
 
@@ -156,6 +181,18 @@ def outdoor():
         location = request.form.get('location')
         height = request.form.get('height')
         pitches = request.form.get('pitches')
+
+        if not name or not location or not date or not height or not pitches: 
+            flash("Missing information. Try again.")
+            return redirect("/outdoor")
+
+        if int(height) <= 0:
+            flash("Enter a positive integer for height")
+            return redirect("/outdoor")
+
+        if int(pitches) <= 0:
+            flash("Enter a positive integer for height")
+            return redirect("/outdoor")
 
         conn = get_db()
         #add new climb to DB
@@ -194,6 +231,7 @@ def outdoor():
 
 #history page with full table
 @app.route("/history")
+@login_required
 def history():
 
     user = session['user_id']
