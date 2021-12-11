@@ -211,6 +211,12 @@ def delete():
     list = request.form.getlist('delete')
     print(list)
 
+    conn = get_db()
+    for climb in list:
+        conn.execute("DELETE FROM indoor WHERE rowid = ?", (climb,))
+    conn.commit()
+    conn.close()
+
     return redirect("/history")
 
 

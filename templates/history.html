@@ -5,7 +5,6 @@
 <div class = "card row m-3">
     <h1>Your Indoor Activity</h1>
     <form action = "/delete", method = "post">
-    <input class = "btn btn-danger" type = "submit">
     <table class = "table" id = "results-table">
         <tr>
             <th>Date</th>
@@ -26,6 +25,7 @@
         </tr>
         {% endfor %}
     </table>
+    <input class = "btn btn-danger" type = "submit" value = "Delete Rows">
 </form>
 </div>
 </div>
