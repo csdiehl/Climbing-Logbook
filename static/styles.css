@@ -1,4 +1,55 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 400;
+    background-color: #F5F3F6;
+    color: #a6a6a6;
 }
+
+.container-fluid {
+    background-color: #F5F3F6;
+}
+
+#login-card {
+    width: 50vw;
+    text-align: center;
+    display: block;
+    margin: auto;
+    position: relative;
+    top: 100px;
+}
+
+#login-subhead {
+    color: #a6a6a6;
+    font-size: 20px;
+}
+
+.card {
+    padding: 10px;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.chart-header {
+    font-size: 20px;
+    font-weight: 300;
+    color: 'lightgrey';
+}
+
+footer {
+    margin-top: 20px;
+}
+
+li {
+    color: 'grey';
+}
+
+.btn-primary {
+    background-color: #2471E0;
+}
+
+/* Color Theme Swatches in Hex */
+.Modern-1-hex { color: #3C005D; }
+.Modern-2-hex { color: #2471E0; }
+.Modern-3-hex { color: #00C281; }
+.Modern-4-hex { color: #FF8602; }
+.Modern-5-hex { color: #FF140C; }

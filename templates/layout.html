@@ -20,8 +20,10 @@
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"></script>
 
 </head>
-
-<nav class = "navbar navbar-expand-md navbar-light bg-light border">
+<body>
+<div class = "row">
+<div class = "col-md-1">
+<nav class = "navbar">
     <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -35,15 +37,14 @@
         </ul>
     {% endif %}
 </nav>
+</div>
 
-<body>
-   <main class = "container-fluid">
+<div class = "col-md-11">
+   <main>
     {% block main %}{% endblock %}
    </main>
+</div>
+</div>
+
 </body>
-
-<footer class = "text-center text-muted">
-    <p>Footer content / credits</p>
-</footer>
-
 </html>

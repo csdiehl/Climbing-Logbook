@@ -62,23 +62,50 @@ const boulder = groupMax(maxSorted.filter(row => row.type == "boulder"))
 const lead = groupMax(maxSorted.filter(row => row.type == "lead"))
 const toprope = groupMax(maxSorted.filter(row => row.type == "toprope"))
 
-console.log(boulder)
-console.log(lead)
-console.log(toprope)
+//function for finding all time max (without grouping dates)
+findMax = function(arr) {
+let obj = arr.reduce(function(prev, current) {
+    return (prev.difficulty > current.difficulty) ? prev : current;
+})
+return obj.grade
+}
 
+//Generate Big Numbers
+document.addEventListener('DOMContentLoaded', function() {
+    const maxB = findMax(boulder)
+    const maxL = findMax(lead)
+    const maxT = findMax(toprope)
+    const flash = findMax(maxData.filter(row => row.sendType == "onsight" || row.sendType == "flash"))
+
+    document.querySelector('#topBoulder').innerHTML = maxB
+    document.querySelector('#topLead').innerHTML = maxL
+    document.querySelector('#topTopRope').innerHTML = maxT
+    document.querySelector('#topFlash').innerHTML = flash
+})
+
+
+//Generate Charts
 //create gradient
-var ctx = document.getElementById('chart1').getContext('2d');
+createGrad = function(id, color) {
+    var ctx = document.getElementById(id).getContext('2d');
+    var gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, color);
+    gradient.addColorStop(1, '#FFFFFF');
+    return gradient
+}
 
-var gradient = ctx.createLinearGradient(0, 0, 0, 300);
-gradient.addColorStop(0, 'rgba(225, 99, 132, 1)');
-gradient.addColorStop(1, 'rgba(100, 100, 0,0)');
+const gradient = createGrad('chart1', '#2471E0')
+const gradient2 = createGrad('chart2', '#FF8602')
+const gradient3 = createGrad('chart3', '#FF140C')
+const gradient4 = createGrad('chart4', '#3C005D')
+
 
  //setup Chart 1
 const data = {
     datasets: [{
         label: "example dataset",
         backgroundColor: gradient,
-        borderColor: 'rgb(255, 99, 132)',
+        borderColor: '#2471E0',
         data: chartDataSorted,
         fill: true
     }]
@@ -88,7 +115,10 @@ const data = {
 const config = {
     type: 'line',
     data: data,
-    options: {
+    options: {plugins: {
+        legend: {
+            display: false
+        }},
         parsing: {
             xAxisKey: 'date',
             yAxisKey: 'routes'
@@ -106,8 +136,9 @@ const Chart1 = new Chart(
 const data2 = {
     datasets: [{
         label: 'Boulder',
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: '#FF8602',
+        backgroundColor: gradient2,
+        fill: true,
         data: boulder,
         xAxisID: 'x'
     }]
@@ -117,7 +148,10 @@ const data2 = {
 const config2 = {
     type: 'line',
     data: data2,
-    options: {
+    options: {plugins: {
+        legend: {
+            display: false
+        }},
         parsing: {
             xAxisKey: 'date',
             yAxisKey: 'difficulty'
@@ -145,8 +179,9 @@ const Chart2 = new Chart(
 const data3 = {
     datasets: [{
             label: 'Lead',
-            borderColor: 'steelblue',
-            backgroundColor: 'steelblue',
+            borderColor: '#FF140C',
+            backgroundColor: gradient3,
+            fill: true,
             data: lead
         }]
 }
@@ -155,7 +190,10 @@ const data3 = {
 const config3 = {
     type: 'line',
     data: data3,
-    options: {
+    options: {plugins: {
+        legend: {
+            display: false,
+        }},
         parsing: {
             xAxisKey: 'date',
             yAxisKey: 'difficulty'
@@ -183,8 +221,9 @@ const Chart3 = new Chart(
 const data4 = {
     datasets: [{
         label: 'Toprope',
-        borderColor: 'gold',
-        backgroundColor: 'gold',
+        borderColor: '#3C005D',
+        backgroundColor: gradient4,
+        fill: true,
         data: toprope
     }]
 }
@@ -194,6 +233,10 @@ const config4 = {
     type: 'line',
     data: data4,
     options: {
+        plugins: {
+        legend: {
+            display: false
+        }},
         parsing: {
             xAxisKey: 'date',
             yAxisKey: 'difficulty'

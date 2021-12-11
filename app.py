@@ -106,7 +106,7 @@ def homepage():
         chart_rows = conn.execute("SELECT date, SUM(num_routes) FROM indoor WHERE user_id = ? GROUP BY date", (user,) ).fetchall()
 
         #get chart data for max climbs chart
-        max_chart_rows = conn.execute("SELECT date, grade, type FROM indoor WHERE user_id = ?",(user,) ).fetchall()
+        max_chart_rows = conn.execute("SELECT date, grade, type, send_type FROM indoor WHERE user_id = ?",(user,) ).fetchall()
 
         #Transform data to json
         object_list = []
@@ -129,6 +129,7 @@ def homepage():
             d['date'] = row[0]
             d['grade'] = row[1]
             d['type'] = row[2]
+            d['sendType'] = row[3]
             if row[2] == "boulder":
                 d['difficulty'] = boulders.index(row[1])
             else:
