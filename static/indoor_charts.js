@@ -22,38 +22,6 @@ sortDate = function(a, b) {
     return new Date(a.date).getTime() - new Date(b.date).getTime();
 }
 
-//Labeling function
-callBack = function(label, index, labels) {
-    switch(label) {
-        case 0:
-            return '5.7   '
-        case 1:
-            return '5.8 | VB'
-        case 2:
-            return '5.9 | V0'
-        case 3:
-            return '5.10a   '
-        case 4:
-            return '5.10b   '
-        case 5:
-            return '5.10c | V1'
-        case 6:
-            return '5.10d   '
-        case 7: 
-            return '5.11a | V2'
-        case 8:
-            return '5.11b | V3'
-        case 9:
-            return '5.11c   '
-        case 10:
-            return '5.11d   '
-        case 11:
-            return '5.12a | V4'
-        case 12:
-            return '5.12b | V5'
-    }
-};
-
 //filter by climbing type then return days with max difficulty climb
 let maxSorted = maxData.sort(sortDate)
 let chartDataSorted = chartData.sort(sortDate)

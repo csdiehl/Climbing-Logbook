@@ -11,7 +11,9 @@
     <form class = "form-group" action = "/outdoor" method = "post">
         <div class = "row mb-2">
         <div class = "col-md-4"><input class = "form-control" type = "date" placeholder = "date" name = "date"></div>
-        <div class = "col-md-4"><input class = "form-control" type = "text" placeholder = "grade" name = "grade"></div>
+        <div class = "col-md-4">
+            <select class = "form-control" type = "text" placeholder = "grade" name = "grade" id = "grade-select"></select>
+        </div>
         <div class = "col-md-4"><input class = "form-control" type = "text" placeholder = "location" name = "location"></div>
         </div>
         <div class = "row mb-2">
@@ -21,7 +23,7 @@
         </div>
         <div class = "row mb-2">
             <div class = "col-md-5">
-                <select class = "form-control" name = "type">
+                <select class = "form-control" name = "type" id = "type-select">
                     <option value = "lead">Lead</option>
                     <option value = "toprope">Toprope</option>
                     <option value = "boulder">Boulder</option>
@@ -92,7 +94,9 @@
 </div>
 </div>
 
+<script src = "static/helpers.js"></script>
 <script type = "text/javascript">
+    changeSelect()
     const data = {{ data|tojson }}
 </script>
 <script type = "text/javascript" src = "static/outdoor.js"></script>
