@@ -69,12 +69,19 @@ const gradient4 = createGrad('chart4', '#3C005D')
 
 
  //setup Chart 1
+let dates = chartDataSorted.map(obj => new Date(obj.date))
+console.log(dates)
+
+let routes = chartDataSorted.map(obj => obj.routes)
+console.log(routes)
+
 const data = {
+    labels: dates,
     datasets: [{
         label: "example dataset",
         backgroundColor: gradient,
         borderColor: '#2471E0',
-        data: chartDataSorted,
+        data: routes,
         fill: true
     }]
 };
@@ -83,14 +90,19 @@ const data = {
 const config = {
     type: 'line',
     data: data,
-    options: {plugins: {
+    options: {
+        plugins: {
         legend: {
             display: false
         }},
-        parsing: {
-            xAxisKey: 'date',
-            yAxisKey: 'routes'
-        }
+        scales: {
+           x: {
+               type: 'time',
+               time: {
+                   unit: 'day'
+               }
+           }
+            }
     }
 };
 
@@ -132,7 +144,13 @@ const config2 = {
                     stepSize: 1,
                     callback: callBack
                     }
+                },
+            x: {
+                type: 'time',
+                time: {
+                    unit: 'day'
                 }
+            }
             },
         }
     };
@@ -173,6 +191,12 @@ const config3 = {
                     autoSkip: false,
                     stepSize: 1,
                     callback: callBack
+                    }
+                },
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
                     }
                 }
             },
@@ -216,6 +240,12 @@ const config4 = {
                     autoSkip: false,
                     stepSize: 1,
                     callback: callBack
+                    }
+                },
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
                     }
                 }
             },
