@@ -200,10 +200,18 @@ def history():
 
     #get all indoor climbs in DB to pass to html
     conn = get_db()
-    rows = conn.execute('SELECT * FROM indoor WHERE user_id = ?', (user,) ).fetchall()
+    rows = conn.execute('SELECT rowid, * FROM indoor WHERE user_id = ?', (user,) ).fetchall()
     conn.close()
 
     return render_template("history.html", rows = rows)
+
+#delete rows from history table
+@app.route("/delete", methods = ['POST'])
+def delete():
+    list = request.form.getlist('delete')
+    print(list)
+
+    return redirect("/history")
 
 
 @app.route("/logout")

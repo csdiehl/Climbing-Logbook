@@ -4,26 +4,29 @@
 <div class = "container-fluid">
 <div class = "card row m-3">
     <h1>Your Indoor Activity</h1>
+    <form action = "/delete", method = "post">
+    <input class = "btn btn-danger" type = "submit">
     <table class = "table" id = "results-table">
         <tr>
-            <th>User</th>
             <th>Date</th>
             <th>Grade</th>
             <th>Climbing Style</th>
             <th>Type</th>
             <th>Number of Routes</th>
+            <th>Delete</th>
         </tr>
         {% for row in rows %}
         <tr>
-            <td>{{ row['user_id'] }}</td>
             <td>{{ row['date'] }}</td>
             <td>{{ row['grade'] }}</td>
             <td>{{ row['type'] }}</td>
             <td>{{ row['send_type'] }}</td>
             <td>{{ row['num_routes'] }}</td>
+            <td><input type = "checkbox" name = "delete" value = "{{ row['rowid'] }}"></td>
         </tr>
         {% endfor %}
     </table>
+</form>
 </div>
 </div>
 {% endblock %}
