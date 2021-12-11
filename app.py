@@ -19,6 +19,13 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+#Climbing difficulty scale conversion: https://www.rei.com/learn/expert-advice/climbing-bouldering-rating.html
+grades = ["5.7", "5.8", "5.9", "5.10a", "5.10b", "5.10c", "5.10d", "5.11a", "5.11b", "5.11c", "5.11d", 
+"5.12a", "5.12b", "5.12c", "5.12d", "5.13a", "5.13b"]
+
+boulders = ["NA", "VB", "V0", "NA", "NA", "V1", "NA", "V2", "V3", "NA", "NA", "V4", "V5", "V6", "NA", "V7", "V8"]
+
+
 
 #welcome page
 @app.route('/', methods = ['GET', 'POST'])
@@ -116,12 +123,6 @@ def homepage():
             d['routes'] = row[1]
             object_list.append(d)
 
-        #Climbing difficulty scale conversion: https://www.rei.com/learn/expert-advice/climbing-bouldering-rating.html
-        grades = ["5.7", "5.8", "5.9", "5.10a", "5.10b", "5.10c", "5.10d", "5.11a", "5.11b", "5.11c", "5.11d", 
-        "5.12a", "5.12b", "5.12c", "5.12d", "5.13a", "5.13b"]
-
-        boulders = ["NA", "VB", "V0", "NA", "NA", "V1", "NA", "V2", "V3", "NA", "NA", "V4", "V5", "V6", "NA", "V7", "V8"]
-
         #transform data for max difficulty chart
         max_list = []
         for row in max_chart_rows:
@@ -172,7 +173,24 @@ def outdoor():
         person = users[0]['username']
         conn.close()
 
-        return render_template('outdoor.html', person = person, rows = rows)
+        new_list = []
+        for row in rows:
+            d = {}
+            d['grade'] = row[2]
+            d['name'] = row[3]
+            d['location'] = row[4]
+            d['height'] = row[5]
+            d['pitches'] = row[6]
+            d['type'] = row[7]
+            d['send_type'] = row[8]
+            if row[7] == "boulder":
+                d['difficulty'] = boulders.index(row[2])
+            else:
+                d['difficulty'] = grades.index(row[2])
+            new_list.append(d)
+
+        print(new_list)
+        return render_template('outdoor.html', person = person, rows = rows, data = new_list)
 
 #history page with full table
 @app.route("/history")
