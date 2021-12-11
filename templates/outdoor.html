@@ -1,35 +1,56 @@
 {% extends "layout.html" %}
 
 {% block main %}
+<div class = "container-fluid h-100">
+<div class = "row mx-3">
 <h1>Outdoor Climbs</h1>
+</div>
 
-<div class = "row">
+<div class = "card row mx-3 mb-3">
     <h2>Enter Outdoor Climbs</h2>
-    <form action = "/outdoor" method = "post">
-        <input type = "date" placeholder = "date" name = "date">
-        <input type = "text" placeholder = "grade" name = "grade">
-        <input type = "text" placeholder = "location" name = "location">
-        <input type = "text" placeholder = "route name" name = "route_name">
-        <input type = "number" placeholder = "height" name = "height">
-        <input type = "number" name = "pitches">Pitches</input>
-        <select name = "type">
-            <option value = "lead">Lead</option>
-            <option value = "toprope">Toprope</option>
-            <option value = "boulder">Boulder</option>
-        </select>
-        <select name = "send_type">
-            <option value = "onsight">Onsight</option>
-            <option value = "flash">Flash</option>
-            <option value = "redpoint">Redpoint / Send</option>
-        </select>
-        <button class = "btn btn-primary" type = "submit">Submit</button>
+    <form class = "form-group" action = "/outdoor" method = "post">
+        <div class = "row mb-2">
+        <div class = "col-md-4"><input class = "form-control" type = "date" placeholder = "date" name = "date"></div>
+        <div class = "col-md-4"><input class = "form-control" type = "text" placeholder = "grade" name = "grade"></div>
+        <div class = "col-md-4"><input class = "form-control" type = "text" placeholder = "location" name = "location"></div>
+        </div>
+        <div class = "row mb-2">
+            <div class = "col"><input class = "form-control" type = "text" placeholder = "route name" name = "route_name"></div>
+            <div class = "col"><input class = "form-control" type = "number" placeholder = "height" name = "height"></div>
+            <div class = "col"><input class = "form-control" type = "number" name = "pitches" placeholder = "pitches"></input></div>
+        </div>
+        <div class = "row mb-2">
+            <div class = "col-md-5">
+                <select class = "form-control" name = "type">
+                    <option value = "lead">Lead</option>
+                    <option value = "toprope">Toprope</option>
+                    <option value = "boulder">Boulder</option>
+                </select>
+            </div>
+            <div class = "col-md-5">
+                <select class = "form-control" name = "send_type">
+                    <option value = "onsight">Onsight</option>
+                    <option value = "flash">Flash</option>
+                    <option value = "redpoint">Redpoint / Send</option>
+                </select>
+            </div>
+            <div class = "col-md-2"><button class = "btn btn-primary" type = "submit">Submit</button></div>
+        </div>
     </form>
 </div>
 
+<div class = "card row mx-3 mb-3">
+    <div class = "col-md-6"><h1>Big Stats</h1></div>
+    <div class = "col-md-6">
+        <h3 class = "chart-header">Climbs by Grade</h3>
+        <canvas></canvas>
+    </div>
+</div>
 
+<div class = "card row mx-3 mb-5">
 <h2>Your activity</h2>
 <div class = "row">
-    <table id = "results-table">
+    <table class = "table" id = "results-table">
         <tr>
             <th>User</th>
             <th>Date</th>
@@ -55,6 +76,8 @@
         </tr>
         {% endfor %}
     </table>
+</div>
+</div>
 </div>
 
 {% endblock %}

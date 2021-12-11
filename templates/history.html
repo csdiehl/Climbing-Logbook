@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<h1>Your Activity</h1>
-<h2>Indoor</h2>
-<div class = "row">
-    <table id = "results-table">
+<div class = "container-fluid">
+<div class = "card row m-3">
+    <h1>Your Indoor Activity</h1>
+    <table class = "table" id = "results-table">
         <tr>
             <th>User</th>
             <th>Date</th>
@@ -24,5 +24,6 @@
         </tr>
         {% endfor %}
     </table>
+</div>
 </div>
 {% endblock %}
