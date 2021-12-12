@@ -5,38 +5,56 @@
  console.log(maxData)
 
  //console.log(JSON.parse(chartData.replace(/&#34;/g,'"'))) - use in case json gets messed up
-//function to find max by date
-groupMax = function(arr) {
-    const result = Object.values(
-        arr.reduce((r, o) => {
-        r[o.date] = (r[o.date] && r[o.date].difficulty > o.difficulty) ? r[o.date] : o
-    
-        return r
-    }, {}))
-
-    return result
-}
-
-//sort dates
-sortDate = function(a, b) {
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
-}
 
 //filter by climbing type then return days with max difficulty climb
 let maxSorted = maxData.sort(sortDate)
 let chartDataSorted = chartData.sort(sortDate)
 
-const boulder = groupMax(maxSorted.filter(row => row.type == "boulder"))
-const lead = groupMax(maxSorted.filter(row => row.type == "lead"))
-const toprope = groupMax(maxSorted.filter(row => row.type == "toprope"))
 
-//function for finding all time max (without grouping dates)
-findMax = function(arr) {
-let obj = arr.reduce(function(prev, current) {
-    return (prev.difficulty > current.difficulty) ? prev : current;
+let boulder = groupMax(maxSorted.filter(row => row.type == "boulder"))
+let lead = groupMax(maxSorted.filter(row => row.type == "lead"))
+let toprope = groupMax(maxSorted.filter(row => row.type == "toprope"))
+
+//Choose data based on button selection
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('#weekBtn').onclick = function() {
+        data.datasets[0].data = groupSum(chartData, 'week')
+        data2.datasets[0].data = groupWeek(maxSorted.filter(row => row.type == "boulder"))
+        data3.datasets[0].data = groupWeek(maxSorted.filter(row => row.type == "lead"))
+        data4.datasets[0].data = groupWeek(maxSorted.filter(row => row.type == "toprope"))
+
+        Chart1.update()
+        Chart2.update()
+        Chart3.update()
+        Chart4.update()
+    }
+
+    document.querySelector('#monthBtn').onclick = function() {
+        data.datasets[0].data = groupSum(chartData, 'month')
+        data2.datasets[0].data = groupMonth(maxSorted.filter(row => row.type == "boulder"))
+        data3.datasets[0].data = groupMonth(maxSorted.filter(row => row.type == "lead"))
+        data4.datasets[0].data = groupMonth(maxSorted.filter(row => row.type == "toprope"))
+
+        Chart1.update()
+        Chart2.update()
+        Chart3.update()
+        Chart4.update()
+    }
+
+    document.querySelector('#dayBtn').onclick = function() {
+        data.datasets[0].data = chartDataSorted
+        data2.datasets[0].data = groupMax(maxSorted.filter(row => row.type == "boulder"))
+        data3.datasets[0].data = groupMax(maxSorted.filter(row => row.type == "lead"))
+        data4.datasets[0].data = groupMax(maxSorted.filter(row => row.type == "toprope"))
+
+        Chart1.update()
+        Chart2.update()
+        Chart3.update()
+        Chart4.update()
+    }
+
 })
-return obj.grade
-}
+
 
 //Generate Big Numbers
 document.addEventListener('DOMContentLoaded', function() {
@@ -69,19 +87,13 @@ const gradient4 = createGrad('chart4', '#3C005D')
 
 
  //setup Chart 1
-let dates = chartDataSorted.map(obj => new Date(obj.date))
-console.log(dates)
-
-let routes = chartDataSorted.map(obj => obj.routes)
-console.log(routes)
 
 const data = {
-    labels: dates,
     datasets: [{
         label: "example dataset",
         backgroundColor: gradient,
         borderColor: '#2471E0',
-        data: routes,
+        data: chartData,
         fill: true
     }]
 };
@@ -91,6 +103,10 @@ const config = {
     type: 'line',
     data: data,
     options: {
+        parsing: {
+            xAxisKey: 'date',
+            yAxisKey: 'routes'
+        },
         plugins: {
         legend: {
             display: false
@@ -114,6 +130,7 @@ const Chart1 = new Chart(
 
  //setup Chart 2
 const data2 = {
+    labels: boulder.map(obj => obj.date),
     datasets: [{
         label: 'Boulder',
         borderColor: '#FF8602',
@@ -163,6 +180,7 @@ const Chart2 = new Chart(
 
 //Setup Chart3
 const data3 = {
+    labels: lead.map(o => o.date),
     datasets: [{
             label: 'Lead',
             borderColor: '#FF140C',
@@ -211,6 +229,7 @@ const Chart3 = new Chart(
 
 //Setup Chart4
 const data4 = {
+    labels: toprope.map(obj => obj.date),
     datasets: [{
         label: 'Toprope',
         borderColor: '#3C005D',

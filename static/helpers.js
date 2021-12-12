@@ -59,3 +59,80 @@ callBack = function(label, index, labels) {
             return '5.12b | V5'
     }
 };
+
+//function for finding all time max (without grouping dates)
+findMax = function(arr) {
+    let obj = arr.reduce(function(prev, current) {
+        return (prev.difficulty > current.difficulty) ? prev : current;
+    })
+    return obj.grade
+    }
+
+//function to find max by date
+groupMax = function(arr) {
+    const result = Object.values(
+        arr.reduce((r, o) => {
+        r[o.date] = (r[o.date] && r[o.date].difficulty > o.difficulty) ? r[o.date] : o
+    
+        return r
+    }, {}))
+
+    return result
+}
+
+//max by week
+groupWeek = function(arr) {
+    const result = Object.values(
+        arr.reduce((r, o) => {
+            let week = moment(o.date, "YYYY-MM-DD").week()
+
+        r[week] = (r[week] && r[week].difficulty > o.difficulty) ? r[week] : o
+    
+        return r
+    }, {}))
+
+    return result
+}
+
+
+//max by month
+groupMonth = function(arr) {
+    const result = Object.values(
+        arr.reduce((r, o) => {
+            let month = new Date(o.date).getMonth()
+
+        r[month] = (r[month] && r[month].difficulty > o.difficulty) ? r[month] : o
+    
+        return r
+    }, {}))
+    return result
+}
+
+//Sum by Week or Month
+function groupSum(arr, mode) {
+    var result = []
+
+    arr.reduce(function(res, value) {
+        var week;
+
+        if (mode == "week") {
+            week = moment(value.date, 'YYYY-MM-DD').week()
+        } else if (mode == "month") {
+            week = new Date(value.date).getMonth()
+        }
+
+        if(!res[week]) {
+            res[week] = {date: value.date, routes: 0}
+            result.push(res[week])
+        }
+        res[week].routes += value.routes
+        return res
+    }, {});
+
+    return result
+}
+
+//sort dates
+sortDate = function(a, b) {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+}
