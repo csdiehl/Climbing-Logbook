@@ -8,6 +8,9 @@ from functools import wraps
 #configure application
 app = Flask(__name__)
 
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 #add function to connect to getbase and get back dictionary for each row
 def get_db():
     conn = sql.connect('climbs.db')
@@ -16,7 +19,7 @@ def get_db():
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
