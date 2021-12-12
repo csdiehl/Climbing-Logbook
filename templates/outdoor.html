@@ -2,12 +2,11 @@
 
 {% block main %}
 <div class = "container-fluid h-100">
-<div class = "row mx-3">
-<h1>Outdoor Climbs</h1>
-</div>
 
-<div class = "card row mx-3 mb-3">
-    <h2>Enter Outdoor Climbs</h2>
+<div class = "row mx-3 mb-3">
+    <div class = "col-md-12 mt-4">
+    <div class = "card border-0">
+    <h2>Outdoor Climbing</h2>
     <form class = "form-group" action = "/outdoor" method = "post">
         <div class = "row mb-2">
         <div class = "col-md-4"><input class = "form-control" type = "date" placeholder = "date" name = "date"></div>
@@ -36,7 +35,7 @@
                     <option value = "redpoint">Redpoint / Send</option>
                 </select>
             </div>
-            <div class = "col-md-2"><button class = "btn btn-primary" type = "submit">Submit</button></div>
+            <div class = "col-md-2"><button class = "btn btn-secondary" type = "submit">Submit</button></div>
         </div>
     </form>
     <div class = "row">
@@ -49,28 +48,39 @@
         {% endwith %}
     </div>
 </div>
+</div>
+</div>
 
-<div class = "card row mx-3 mb-3">
-    <div class = "row">
-        <div class = "col-md-4">
+<div class = "row mx-3 mb-3">
+    <div class = "col-md-6">
+    <div id = "outdoorCard" class = "card border-0">
+        <div class = "row">
+        <div class = "col-md-7">
             <p>Highest Multipitch</p>
             <h1 id = "multipitch" class = "display-3"></h1>
             <h2 id = "multiSub" class = "subhead"></h2>
             <h2 id = "pitches" class = "subhead"></h2>
         </div>
-        <div class = "col-md-2">
+        <div class = "col-md-5">
             <p>Hardest Boulder</p>
             <h1 id = "hardBoulder" class = "display-3"></h1>
             <h2 class = "subhead" id = "boulderSub"></h2>
         </div>
-        <div class = "col-md-5">
+    </div>
+</div>
+</div>  
+    <div class = "col-md-6">
+        <div class = "card border-0">
             <h3 class = "chart-header">Hardest Leads</h3>
             <canvas id = "outdoorChart"></canvas>
         </div>
     </div>
+
 </div>
 
-<div class = "card row mx-3 mb-5">
+<div class = "row mx-3 mb-5">
+<div class = "col-md-12">
+    <div class = "card border-0">
 <h2>Your activity</h2>
 <div class = "row">
     <table class = "table" id = "results-table">
@@ -99,6 +109,8 @@
         </tr>
         {% endfor %}
     </table>
+</div>
+</div>
 </div>
 </div>
 </div>

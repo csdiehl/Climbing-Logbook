@@ -34,7 +34,7 @@ const chartData = {
     labels: labels,
     datasets: [{
         data: finalData,
-        backgroundColor: 'steelblue'
+        backgroundColor: '#CA6702'
     }]
 }
 

@@ -7,26 +7,14 @@
    
 </div>
 
-<div class = "row mb-3">
+<div class = "row mb-3 mt-4">
     <div id = "indoor-main-stats" class = "col-md-8">
-        <div class = "card border-0">
+        <div class = "card border-0" id = "main-card">
             <div class = "row ml-3 mb-2">
                 <div class = "col-md-8">
                 <h1>Hello, {{ person }}</h1>
                 </div>
                 <div class = "col-md-4">
-                <p>Group climbs by:</p>
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary active">
-                      <input id = "dayBtn" type="radio" name="options" id="option1" checked> Day
-                    </label>
-                    <label class="btn btn-primary">
-                      <input id = "weekBtn" type="radio" name="options" id="option2"> Week
-                    </label>
-                    <label class="btn btn-primary">
-                      <input id = "monthBtn" type="radio" name="options" id="option3"> Month
-                    </label>
-                </div>
             </div>
             </div>
             <div class = "row ml-3 mt-2">
@@ -82,11 +70,23 @@
                     <input class = "form-control" type = "number" name = "num_routes" placeholder="Routes"></input>
                 </div>
                 <div class = "col">
-                    <button class = "btn btn-primary" type = "submit">Submit</button>
+                    <button class = "btn btn-secondary" type = "submit">Submit</button>
                 </div>
             </div>
         </form>
-        <div class = "row">
+        <div class = "row ml-3">
+            <p>Group climbs by:</p>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input id = "dayBtn" type="radio" name="options" id="option1" checked> Day
+                </label>
+                <label class="btn btn-secondary">
+                  <input id = "weekBtn" type="radio" name="options" id="option2"> Week
+                </label>
+                <label class="btn btn-secondary">
+                  <input id = "monthBtn" type="radio" name="options" id="option3"> Month
+                </label>
+            </div>
             <div class = "col-md-4">
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}

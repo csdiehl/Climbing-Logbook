@@ -4,6 +4,13 @@
  //confirm chart2 data is received
  console.log(maxData)
 
+ //colors: https://coolors.co/001219-005f73-0a9396-94d2bd-e9d8a6-ee9b00-ca6702-bb3e03-ae2012-9b2226
+ const blue = "#005F73"
+ const lightBlue = "#0A9396"
+ const lightestBlue = "#94d2bd"
+ const orange = "#CA6702"
+ const red = "#AE2012"
+
  //console.log(JSON.parse(chartData.replace(/&#34;/g,'"'))) - use in case json gets messed up
 
 //filter by climbing type then return days with max difficulty climb
@@ -80,11 +87,10 @@ createGrad = function(id, color) {
     return gradient
 }
 
-const gradient = createGrad('chart1', '#2471E0')
-const gradient2 = createGrad('chart2', '#FF8602')
-const gradient3 = createGrad('chart3', '#FF140C')
-const gradient4 = createGrad('chart4', '#3C005D')
-
+const gradient = createGrad('chart1', orange)
+const gradient2 = createGrad('chart2', blue)
+const gradient3 = createGrad('chart3', lightBlue)
+const gradient4 = createGrad('chart4', lightestBlue)
 
  //setup Chart 1
 
@@ -92,7 +98,7 @@ const data = {
     datasets: [{
         label: "example dataset",
         backgroundColor: gradient,
-        borderColor: '#2471E0',
+        borderColor: orange,
         data: chartData,
         fill: true
     }]
@@ -133,7 +139,7 @@ const data2 = {
     labels: boulder.map(obj => obj.date),
     datasets: [{
         label: 'Boulder',
-        borderColor: '#FF8602',
+        borderColor: blue,
         backgroundColor: gradient2,
         fill: true,
         data: boulder,
@@ -183,7 +189,7 @@ const data3 = {
     labels: lead.map(o => o.date),
     datasets: [{
             label: 'Lead',
-            borderColor: '#FF140C',
+            borderColor: lightBlue,
             backgroundColor: gradient3,
             fill: true,
             data: lead
@@ -232,7 +238,7 @@ const data4 = {
     labels: toprope.map(obj => obj.date),
     datasets: [{
         label: 'Toprope',
-        borderColor: '#3C005D',
+        borderColor: lightestBlue,
         backgroundColor: gradient4,
         fill: true,
         data: toprope

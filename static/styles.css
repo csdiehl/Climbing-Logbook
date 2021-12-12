@@ -10,13 +10,40 @@ body {
     background-color: #F5F3F6;
 }
 
+#background {
+    background-color: #F5F3F6;
+    height: 100vh;
+}
+
+h1 {
+    font-size: 52px;
+    font-weight: 300;
+}
+
+h2 {
+    color: #a6a6a6;
+}
+
+input[type = 'radio'] {
+    visibility: hidden;
+}
+
+.table {
+    padding: 10px;
+}
+
 #login-card {
     width: 50vw;
     text-align: center;
-    display: block;
     margin: auto;
+    height: 50vh;
     position: relative;
     top: 100px;
+}
+
+#outdoorCard {
+    background-image: linear-gradient(to right, #AE2012, #CA6702);
+    color: #FFFFFF;
 }
 
 #login-subhead {
@@ -25,7 +52,7 @@ body {
 }
 
 .card {
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     height: 100%;
 }
@@ -40,17 +67,22 @@ footer {
     margin-top: 20px;
 }
 
-li {
-    color: 'grey';
+.nav-item {
+    color: 'grey' !important;
 }
 
 .btn-primary {
-    background-color: #2471E0;
+    background-color: #005F73;
 }
 
 .error {
     color: 'red';
     text-align: center;
+}
+
+#main-card {
+    background-image: linear-gradient(to right, #005F73, #94d2bd);
+    color: #FFFFFF;
 }
 
 /* Color Theme Swatches in Hex */
