@@ -4,8 +4,10 @@ import sqlite3 as sql
 from flask_session import Session
 from tempfile import mkdtemp
 from functools import wraps
-import psycopg2
 import os
+
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
 
 #configure application
 app = Flask(__name__)
@@ -15,7 +17,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 #add function to connect to getbase and get back dictionary for each row
 def get_db():
-    conn = sql.connect(os.environ.get("DATABASE_URL"))
+    conn = sql.connect(os.path.join(THIS_FOLDER, 'climbs.db'))
     conn.row_factory = sql.Row
     return conn
 
